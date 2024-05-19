@@ -30,7 +30,7 @@ pipeline {
             }
         }
 
-             stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube Test') {
@@ -38,7 +38,7 @@ pipeline {
                     }
                 }
             }
-        
+        }
 
         stage('Build Docker image') {
             steps {
