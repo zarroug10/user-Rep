@@ -42,7 +42,7 @@ pipeline {
         stage('Deploy Docker image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'token', variable: 'DOCKER_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_TOKEN')]) {
                         docker.withRegistry('https://index.docker.io/v1/', '12') {
                             bat "docker image push zarroug/user:latest"
                         }
