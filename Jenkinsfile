@@ -20,7 +20,7 @@ pipeline {
     powershell 'npm install'
     powershell 'npm install --save node-pre-gyp'
     // powershell 'npm install jest --save-dev'
-    // powershell 'npm install bcrypt'
+    powershell 'npm install bcrypt'
 }
             }
         
