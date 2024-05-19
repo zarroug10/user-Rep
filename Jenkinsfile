@@ -30,6 +30,16 @@ pipeline {
             }
         }
 
+             stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube Test') {
+                        bat 'npm run sonarqube'
+                    }
+                }
+            }
+        
+
         stage('Build Docker image') {
             steps {
                 script {
