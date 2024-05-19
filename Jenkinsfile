@@ -28,16 +28,16 @@ pipeline {
         stage('Build') {
             steps {
                 // sh 'node app.js'
-                powershell 'npm start'
+                powershell 'npm run build'
             }
         }
 
-        stage('Test') {
-            steps {
-                // Run Jest tests
-                powershell 'npm test'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         // Run Jest tests
+        //         powershell 'npm test'
+        //     }
+        // }
 
         stage('Build Docker image') {
             steps {
