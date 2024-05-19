@@ -1,0 +1,263 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+  namespace: user-ms
+data:
+  water_company.sql: |
+    -- phpMyAdmin SQL Dump
+    -- version 5.2.1
+    -- https://www.phpmyadmin.net/
+    --
+    -- Host: 127.0.0.1
+    -- Generation Time: May 14, 2024 at 06:50 PM
+    -- Server version: 10.4.32-MariaDB
+    -- PHP Version: 8.0.30
+    
+    SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+    START TRANSACTION;
+    SET time_zone = "+00:00";
+
+    --
+    -- Database: `water company`
+    --
+
+    -- --------------------------------------------------------
+
+    --
+    -- Table structure for table `feedbacks`
+    --
+
+    CREATE TABLE `feedbacks` (
+      `id` int(11) NOT NULL,
+      `userId` int(11) NOT NULL,
+      `value` int(11) NOT NULL CHECK (`value` >= 0 and `value` <= 5),
+      `incidentId` int(11) NOT NULL,
+      `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+    --
+    -- Dumping data for table `feedbacks`
+    --
+
+    INSERT INTO `feedbacks` (`id`, `userId`, `value`, `incidentId`, `created_at`) VALUES
+    (1, 60, 4, 5, '2024-04-26 08:39:58'),
+    (2, 60, 3, 5, '2024-04-26 17:26:56'),
+    (3, 60, 1, 5, '2024-04-26 17:27:03'),
+    (4, 60, 4, 5, '2024-04-26 17:27:10'),
+    (5, 60, 1, 5, '2024-04-26 17:27:14'),
+    (6, 60, 5, 5, '2024-04-26 18:41:43'),
+    (7, 60, 5, 5, '2024-04-26 18:41:51'),
+    (8, 60, 5, 5, '2024-04-26 18:41:52'),
+    (9, 60, 5, 5, '2024-04-26 18:41:53'),
+    (10, 60, 3, 2, '2024-04-26 18:59:21'),
+    (11, 60, 4, 2, '2024-04-26 18:59:34'),
+    (12, 60, 2, 2, '2024-04-26 18:59:40'),
+    (13, 60, 5, 2, '2024-04-26 18:59:48'),
+    (14, 4, 5, 1, '2024-05-04 22:45:55'),
+    (15, 4, 3, 1, '2024-05-04 22:46:02'),
+    (16, 4, 1, 1, '2024-05-04 22:46:06'),
+    (17, 4, 4, 1, '2024-05-04 22:46:10');
+
+    -- --------------------------------------------------------
+
+    --
+    -- Table structure for table `incidents`
+    --
+
+    CREATE TABLE `incidents` (
+      `id` int(11) NOT NULL,
+      `title` varchar(255) NOT NULL,
+      `description` text NOT NULL,
+      `location` varchar(255) DEFAULT NULL,
+      `latitude` decimal(10,8) NOT NULL,
+      `longitude` decimal(11,8) NOT NULL,
+      `media` varchar(255) DEFAULT NULL,
+      `status` enum('reported','assigned','in_progress','resolved') DEFAULT 'reported',
+      `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+      `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+      `userId` int(11) DEFAULT NULL,
+      `teamId` int(11) DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+    --
+    -- Dumping data for table `incidents`
+    --
+
+    INSERT INTO `incidents` (`id`, `title`, `description`, `location`, `latitude`, `longitude`, `media`, `status`, `created_at`, `updated_at`, `userId`, `teamId`) VALUES
+    (1, 'Water emergency', 'There is a water leak in the basement.', 'ibni ali', 33.87620700, 7.92490100, '1708020169440-RSI9.jpg', 'resolved', '2024-03-07 21:55:11', '2024-05-04 22:44:23', 48, 4),
+    (2, 'Water Leak', 'There is a water leak in the basement.', 'Ward Naam', 33.87620700, 7.91490100, '1708020169440-RSI9.jpg', 'resolved', '2024-03-07 21:57:18', '2024-04-26 18:58:43', 50, 7),
+    (3, 'Damaged pipe', 'There is a water leak', 'shourfa', 33.87620700, 7.89490100, 'Angular_full_color_logo.svg.png', 'assigned', '2024-03-11 16:47:15', '2024-05-05 04:03:52', 48, 4),
+    (4, 'Damaged pipe', 'Damaged pip', 'Gataaya', 33.87620700, 7.90490100, 'Bard_Generated_Image.png', 'reported', '2024-03-12 06:02:07', '2024-03-16 04:56:35', 50, NULL),
+    (5, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'assigned', '2024-03-15 05:03:39', '2024-05-05 04:04:02', 4, 5),
+    (8, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (9, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (10, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (11, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (12, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (13, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (14, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (15, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (16, 'damaged pip', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5);
+
+    --
+    -- Indexes for dumped tables
+    --
+
+    --
+    -- Indexes for table `feedbacks`
+    --
+    ALTER TABLE `feedbacks`
+      ADD PRIMARY KEY (`id`);
+
+    --
+    -- Indexes for table `incidents`
+    --
+    ALTER TABLE `incidents`
+      ADD PRIMARY KEY (`id`);
+
+    --
+    -- AUTO_INCREMENT for dumped tables
+    --
+
+    --
+    -- AUTO_INCREMENT for table `feedbacks`
+    --
+    ALTER TABLE `feedbacks`
+      MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+    --
+    -- AUTO_INCREMENT for table `incidents`
+    --
+    ALTER TABLE `incidents`
+      MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  water_company_test.sql: |
+    -- phpMyAdmin SQL Dump
+    -- version 5.2.1
+    -- https://www.phpmyadmin.net/
+    --
+    -- Host: 127.0.0.1
+    -- Generation Time: May 14, 2024 at 06:51 PM
+    -- Server version: 10.4.32-MariaDB
+    -- PHP Version: 8.0.30
+    
+    SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+    START TRANSACTION;
+    SET time_zone = "+00:00";
+
+    --
+    -- Database: `water company`
+    --
+
+    -- --------------------------------------------------------
+
+    --
+    -- Table structure for table `feedbacks`
+    --
+
+    CREATE TABLE `feedbacks` (
+      `id` int(11) NOT NULL,
+      `userId` int(11) NOT NULL,
+      `value` int(11) NOT NULL CHECK (`value` >= 0 and `value` <= 5),
+      `incidentId` int(11) NOT NULL,
+      `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+    --
+    -- Dumping data for table `feedbacks`
+    --
+
+    INSERT INTO `feedbacks` (`id`, `userId`, `value`, `incidentId`, `created_at`) VALUES
+    (1, 60, 4, 5, '2024-04-26 08:39:58'),
+    (2, 60, 3, 5, '2024-04-26 17:26:56'),
+    (3, 60, 1, 5, '2024-04-26 17:27:03'),
+    (4, 60, 4, 5, '2024-04-26 17:27:10'),
+    (5, 60, 1, 5, '2024-04-26 17:27:14'),
+    (6, 60, 5, 5, '2024-04-26 18:41:43'),
+    (7, 60, 5, 5, '2024-04-26 18:41:51'),
+    (8, 60, 5, 5, '2024-04-26 18:41:52'),
+    (9, 60, 5, 5, '2024-04-26 18:41:53'),
+    (10, 60, 3, 2, '2024-04-26 18:59:21'),
+    (11, 60, 4, 2, '2024-04-26 18:59:34'),
+    (12, 60, 2, 2, '2024-04-26 18:59:40'),
+    (13, 60, 5, 2, '2024-04-26 18:59:48'),
+    (14, 4, 5, 1, '2024-05-04 22:45:55'),
+    (15, 5, 5, 1, '2024-05-04 22:46:08'),
+    (16, 5, 3, 1, '2024-05-04 22:46:17'),
+    (17, 5, 3, 1, '2024-05-04 22:46:20'),
+    (18, 5, 5, 1, '2024-05-04 22:46:32');
+
+    -- --------------------------------------------------------
+
+    --
+    -- Table structure for table `incidents`
+    --
+
+    CREATE TABLE `incidents` (
+      `id` int(11) NOT NULL,
+      `issue` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+      `description` text COLLATE utf8mb4_general_ci NOT NULL,
+      `reporter` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+      `latitude` decimal(11,8) NOT NULL,
+      `longitude` decimal(11,8) NOT NULL,
+      `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+      `status` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'in_progress',
+      `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+      `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+      `type` int(11) NOT NULL,
+      `priority` int(11) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+    --
+    -- Dumping data for table `incidents`
+    --
+
+    INSERT INTO `incidents` (`id`, `issue`, `description`, `reporter`, `latitude`, `longitude`, `image`, `status`, `created_at`, `updated_at`, `type`, `priority`) VALUES
+    (1, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'completed', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 1),
+    (2, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 2),
+    (3, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 3),
+    (4, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 1),
+    (5, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 1),
+    (6, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 2),
+    (7, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 3),
+    (8, 'damaged pipe', 'A water pipe broke at the corner of Main St. and Elm St.', 'John Doe', 40.71277600, -74.00597400, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-05-04 22:38:37', '2024-05-04 22:38:37', 1, 1),
+    (9, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (10, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (11, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (12, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (13, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (14, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (15, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5),
+    (16, 'damaged pipe', 'hello ', 'Zawya', 33.87570700, 7.88490100, '1708023047463-69805_Little_Nightmares_II.jpg', 'in_progress', '2024-03-15 05:03:39', '2024-03-16 11:29:26', 4, 5);
+
+    --
+    -- Indexes for dumped tables
+    --
+
+    --
+    -- Indexes for table `feedbacks`
+    --
+    ALTER TABLE `feedbacks`
+      ADD PRIMARY KEY (`id`);
+
+    --
+    -- Indexes for table `incidents`
+    --
+    ALTER TABLE `incidents`
+      ADD PRIMARY KEY (`id`);
+
+    --
+    -- AUTO_INCREMENT for dumped tables
+    --
+
+    --
+    -- AUTO_INCREMENT for table `feedbacks`
+    --
+    ALTER TABLE `feedbacks`
+      MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+    --
+    -- AUTO_INCREMENT for table `incidents`
+    --
+    ALTER TABLE `incidents`
+      MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;

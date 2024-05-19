@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  nodejs-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nodejs-api-container_user
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - crud_backend_gestion_user_default
+
+  db:
+    image: mysql
+    container_name: db-container-user_jenkins
+    restart: always
+    environment:
+      MYSQL_DATABASE: water_company
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" 
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - crud_backend_gestion_user_default
+    volumes:
+      - crud_backend_gestion_user_default:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  crud_backend_gestion_user_default:
+    driver: bridge
+
+volumes:
+  crud_backend_gestion_user_default:
