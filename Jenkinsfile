@@ -17,9 +17,9 @@ pipeline {
 
         stage('Install dependencies') {
           steps {
-    powershell '${NODEJS_HOME}/bin/npm install'
-    // sh '${NODEJS_HOME}/bin/npm install jest --save-dev'
-    // sh '${NODEJS_HOME}/bin/npm install bcrypt'
+    powershell 'npm install'
+    // powershell 'npm install jest --save-dev'
+    // powershell 'npm install bcrypt'
 }
             }
         
