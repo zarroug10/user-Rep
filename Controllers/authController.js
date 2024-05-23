@@ -393,7 +393,7 @@ exports.searchClients = async (req, res) => {
 
       const { query, username, location, tel, cin } = req.query;
 
-      let queryStr = 'SELECT * FROM users WHERE userType = "client" AND isBanned = 0'; // Exclude banned users
+      let queryStr = "SELECT * FROM users WHERE userType = 'client' AND isBanned = 0";
       let params = [];
 
       if (query || username || tel || cin) {
@@ -414,15 +414,15 @@ exports.searchClients = async (req, res) => {
         }
 
         if (rows.length === 0) {
-          return res.status(404).json({ message: "No clients found." });
+          return res.status(200).json({ message: "No client found.", rows: [] }); // Return an empty result with a message
         }
 
-        return res.status(200).json(rows);
+        return res.status(200).json({ message: "client found.", rows });
       });
     });
   } catch (error) {
-    console.error('Error searching clients:', error);
-    res.status(500).json({ error: 'An error occurred while searching clients' });
+    console.error('Error searching technicians:', error);
+    res.status(500).json({ error: 'An error occurred while searching technicians' });
   }
 };
 
