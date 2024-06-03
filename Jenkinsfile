@@ -43,8 +43,10 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    bat 'docker build --no-cache -t user:latest -f Dockerfile .'
-                    bat 'docker tag user:latest zarroug/user:latest'
+                    withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_TOKEN')]) {
+                        docker.withRegistry('https://index.docker.io/v1/', '12') {
+                            bat 'docker build --no-cache -t user:latest -f Dockerfile .'
+                            bat 'docker tag user:latest zarroug/user:latest'                   
                 }
             }
         }
