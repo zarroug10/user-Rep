@@ -500,7 +500,6 @@ exports.banUser = async (req, res) => {
   }
 };
 
-
 exports.getBlacklist = async (req, res) => {
   try {
     const token = req.headers.authorization;
