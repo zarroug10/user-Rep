@@ -60,11 +60,10 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy to Kubernetes') {
+        stage('kubernetes Deployment') {
             steps {
                 script {
-                    bat 'kubectl apply -f .\user-deployment.yaml'
+                   bat 'kubectl apply -f user-deployment.yaml' 
                 }
             }
         }
