@@ -30,6 +30,14 @@ pipeline {
             }
         }
 
+        stage('Testing') {
+            steps {
+                script {
+                        bat 'npm test'
+                }
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 script {
