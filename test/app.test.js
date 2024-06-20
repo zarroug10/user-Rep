@@ -164,6 +164,4 @@ describe('Auth Controller Tests - Login', () => {
       createdUserId = null;
     }
   });
-
-  // Add more tests for other login scenarios here
 });

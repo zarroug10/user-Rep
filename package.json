@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "npx jest",
+    "test": "npx jest  --forceExit",
     "start": "node app.js",
     "build": "echo 'No build step required'",
     "sonarqube": "sonar-scanner"
