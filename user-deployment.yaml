@@ -1,10 +1,11 @@
+# Backend Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-deployment
   namespace: user-ms
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: backend
@@ -15,10 +16,11 @@ spec:
     spec:
       containers:
         - name: backend
-          image: zarroug/user-ms_kubernetes:latest  
+          image: zarroug/user-ms_kubernetes:latest
           ports:
             - containerPort: 3000
 ---
+# Backend Service
 apiVersion: v1
 kind: Service
 metadata:

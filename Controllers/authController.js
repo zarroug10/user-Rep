@@ -146,7 +146,8 @@ exports.getChiefUsers = async (req, res) => {
 // Sign up api
 exports.signup = async (req, res) => {
   try {
-    const { username, email, password, location, userType, tel, cin } = req.body;
+    const { username, email, password, location, tel, cin } = req.body;
+    const userType = req.body.userType || 'Client'; // Set userType to 'Client' by default
 
     // Check if user with the same email, tel, or cin is banned
     connection.query('SELECT * FROM users WHERE email = ? OR tel = ? OR cin = ?', [email, tel, cin], (err, rows) => {
@@ -167,7 +168,8 @@ exports.signup = async (req, res) => {
         }
 
         // Create new user
-        connection.query('INSERT INTO users SET ?', { username, email, password: hashedPassword, location, userType, tel, cin, isBanned: 0 }, (err, result) => {
+        const newUser = { username, email, password: hashedPassword, location, userType, tel, cin, isBanned: 0 };
+        connection.query('INSERT INTO users SET ?', newUser, (err, result) => {
           if (err) {
             console.error('Error creating user:', err);
             return res.status(500).json({ error: 'An error occurred while creating user' });
@@ -181,6 +183,7 @@ exports.signup = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while signing up user' });
   }
 };
+
 
 
 
@@ -219,7 +222,7 @@ exports.login = async (req, res) => {
         }
 
         // Generate JWT token with user's role included
-        const token = jwt.sign({ userId: user.id, username: user.username, userType: user.userType, location: user.location }, 'your_secret_key_here');
+        const token = jwt.sign({ userId: user.id, username: user.username, userType: user.userType, location: user.location , email:user.email , cin: user.cin, tel: user.tel }, 'your_secret_key_here');
 
         res.status(200).json({ token });
       });
